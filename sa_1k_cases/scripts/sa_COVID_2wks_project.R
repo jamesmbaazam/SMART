@@ -36,4 +36,4 @@ ll_sim <- chain_sim(
 #output
 ll_sim
 
-plot(ll_sim, type = "l")
+plot(ll_sim$time, ll_sim$n, type = "l")
