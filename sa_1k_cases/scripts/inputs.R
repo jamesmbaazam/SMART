@@ -5,7 +5,7 @@ si_sd <- exp(2.9)
 si_mean <- exp(4.7)
 
 
-serial_interval <- function(x = 1) {
+serial_interval <- function(x = 1:10) {
   si <- rlnorm(x, meanlog = si_mean, sdlog = si_sd)
   return(si)
   }

@@ -22,12 +22,12 @@ plot(ll_chain, type = "l")
 
 ## Chain log-likelihood simulation
 ll_sim <- chain_sim(
-  n = 10,
+  n = 20,
   offspring = "pois",
   lambda = 0.5,
   stat = "size",
   serial = serial_interval,
-  t0 = 0,
+  t0 = 4.7,
   tf = 14,
   tree = TRUE
   #nsim_obs = 100
