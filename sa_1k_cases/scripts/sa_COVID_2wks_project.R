@@ -1,39 +1,40 @@
 #Packages
 library("bpmodels")
+library('dplyr')
+library('ggplot2')
 
 #Source the inputs
 source('./scripts/inputs.R')
 
-# Chain log-likelihood outcomes ----
-ll_chain <- chain_ll(
-  x = chain_lengths,
-  offspring = "pois",
-  lambda = 0.5,
-  stat = "length",
-  individual = FALSE,
-  obs_prob = 1, # assumes a constant observation probability
-  nsim_obs = 10
-)
-
-#output
-ll_chain
-
-plot(ll_chain, type = "l")
-
+set.seed(1234)
 ## Chain log-likelihood simulation
 ll_sim <- chain_sim(
-  n = 10,
-  offspring = "pois",
-  lambda = 0.5,
+  n = length(t0s),
+  offspring = "nbinom",
+  mu = 2.0,
+  size = 0.38,
   stat = "size",
+  infinite = 1E5,
   serial = serial_interval,
-  t0 = 0,
+  t0 = t0s,
   tf = 14,
   tree = TRUE
-  #nsim_obs = 100
 )
 
 #output
-ll_sim
+ll_sim_mod <- ll_sim %>% 
+  mutate(day = floor(time)) %>% 
+  group_by(day) %>% 
+  summarise(cases = n()) %>% 
+  ungroup() %>% 
+  summarise(cum_cases = cumsum(cases)) %>% 
+  mutate(date = lubridate::as_date('2020-03-27') + 1:12)
 
-plot(ll_sim, type = "l")
+cases_plot <- ggplot(data = ll_sim_mod) + 
+  geom_line(aes(x = date, y = cum_cases), 
+           stat = 'identity', 
+           color = 'blue',
+           size = 1
+           )
+
+print(cases_plot)
