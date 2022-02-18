@@ -1,8 +1,12 @@
 #Inputs
 
+sims <- 10
+
+t0s <- c(0,2,3,4,4,4,4,6,6,6,6,6,6,7,7,7,8,8,8,8,8,8,8,8)
+
 #Serial interval distribution
-si_sd <- exp(2.9)
-si_mean <- exp(4.7)
+si_sd <- sqrt(log(1 + (2.7/4.7)^2))
+si_mean <- log((4.7^2)/(sqrt(2.7^2 + 4.7^2)))
 
 
 serial_interval <- function(x = 1) {
