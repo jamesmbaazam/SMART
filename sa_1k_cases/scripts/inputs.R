@@ -15,3 +15,9 @@ chain_lengths <- seq(1, 10, 1)
 seed_times <- seq(0, 7, 1) #Assuming time 0 = March 5 and time 7 = March 13
 
 end_times <- seed_times + 14 
+
+library(readr)
+covid19za_timeline_confirmed <- read_csv("scripts/covid19za_timeline_confirmed.csv")
+View(covid19za_timeline_confirmed)
+
+

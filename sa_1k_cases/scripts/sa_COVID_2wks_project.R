@@ -37,3 +37,9 @@ ll_sim <- chain_sim(
 ll_sim
 
 plot(ll_sim$time, ll_sim$n, type = "l")
+
+## Reading the file
+
+
+
+
