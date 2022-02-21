@@ -1,4 +1,7 @@
-#Inputs
+#Packages
+library(dplyr)
+library(tidyr)
+library(purrr)
 
 sims <- 10
 
