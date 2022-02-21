@@ -7,7 +7,8 @@ library(purrr)
 source('./scripts/helper_functions.R')
 source('./scripts/get_data.R')
 
-t0s <- c(0,2,3,4,4,4,4,6,6,6,6,6,6,7,7,7,8,8,8,8,8,8,8,8)
+#Get the cleaned data
+dat <- readRDS('./data/sa_covid_upto_mar5_2020.rds')
 
 #Serial interval distribution
 si_sd <- sqrt(log(1 + (2.7/4.7)^2))
