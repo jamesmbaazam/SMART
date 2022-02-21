@@ -20,7 +20,11 @@ days_from_t0 <- unlist(map2(.x = dat$days_from_t0,
                             .f = function(.x, .y)return(rep(.x, times = ifelse(.y == 0, 1, .y)))
                               )
                        )
+                      
+projection_end_day <- max(days_from_t0) + 14 #14 day projection
 
+#Simulation controls
+number_of_sims <- 10
 serial_interval <- function(x = 1) {
   si <- rlnorm(x, meanlog = si_mean, sdlog = si_sd)
   return(si)
