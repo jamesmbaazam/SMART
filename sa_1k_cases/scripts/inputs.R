@@ -25,6 +25,12 @@ projection_end_day <- max(days_from_t0) + 14 #14 day projection
 
 #Simulation controls
 number_of_sims <- 10
+
+#Serial interval distribution (must be input as a function) ----
+si_sd <- cal_desired_lognorm_sd(mu = 4.7, sigma = 2.9) #the desired standard deviation
+si_mean <- cal_desired_lognorm_mu(mu = 4.7, sigma = 2.9) #the desired mean
+
+#function to specify serial interval
 serial_interval <- function(x = 1) {
   si <- rlnorm(x, meanlog = si_mean, sdlog = si_sd)
   return(si)
