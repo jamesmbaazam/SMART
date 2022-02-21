@@ -8,29 +8,28 @@ source('./scripts/inputs.R')
 
 set.seed(1234)
 ## Chain log-likelihood simulation
-ll_sim <- chain_sim(
-  n = length(t0s),
+simulation_output <- chain_sim(
+  n = length(days_from_t0),
   offspring = "nbinom",
   mu = 2.0,
   size = 0.38,
   stat = "size",
-  infinite = 1E5,
+  infinite = 1E7,
   serial = serial_interval,
-  t0 = t0s,
-  tf = 14,
+  t0 = days_from_t0,
+  tf = projection_end_day,
   tree = TRUE
 )
 
 #output
-ll_sim_mod <- ll_sim %>% 
+simulation_output_mod <- simulation_output %>% 
   mutate(day = floor(time)) %>% 
   group_by(day) %>% 
-  summarise(cases = n()) %>% 
-  ungroup() %>% 
-  summarise(cum_cases = cumsum(cases)) %>% 
-  mutate(date = lubridate::as_date('2020-03-27') + 1:12)
+  summarise(cases = n(), .groups = 'drop') %>% 
+  summarise(cum_cases = cumsum(cases))
 
-cases_plot <- ggplot(data = ll_sim_mod) + 
+#make plots
+cases_plot <- ggplot(data = simulation_output) + 
   geom_line(aes(x = date, y = cum_cases), 
            stat = 'identity', 
            color = 'blue',
