@@ -3,7 +3,9 @@ library(dplyr)
 library(tidyr)
 library(purrr)
 
-sims <- 10
+#Helper functions
+source('./scripts/helper_functions.R')
+source('./scripts/get_data.R')
 
 t0s <- c(0,2,3,4,4,4,4,6,6,6,6,6,6,7,7,7,8,8,8,8,8,8,8,8)
 
