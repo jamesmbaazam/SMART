@@ -27,9 +27,11 @@ simulation_output <- map_dfr(1:number_of_sims,
     }
 )
 
-#output
+#Add new columns to the results
 simulation_output_mod <- simulation_output %>% 
-  mutate(day = floor(time)) %>% 
+  mutate(day = floor(time)) 
+
+final_output <- simulation_output_mod %>% 
   group_by(sim_id, day) %>% 
   summarise(cases = n(), .groups = 'drop_last') %>% 
   summarise(cum_cases = cumsum(cases)) %>% 
@@ -44,3 +46,6 @@ cases_plot <- ggplot(data = simulation_output_mod) +
            )
 
 print(cases_plot)
+
+
+
