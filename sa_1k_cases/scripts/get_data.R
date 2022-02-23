@@ -15,8 +15,7 @@ sa_covid_data <- read_csv(data_url)
 sa_data_subset <- sa_covid_data %>% 
   mutate(date = dmy(date)) %>% 
   select(date) %>% 
-  slice(1:24) %>% 
-  #filter(date <= ymd('2020-03-24')) %>% 
+  filter(date <= dmy('13-03-2020')) %>% 
   group_by(date) %>% 
   summarise(cases = n())
 
