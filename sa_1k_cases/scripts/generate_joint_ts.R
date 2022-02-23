@@ -16,8 +16,8 @@ simulation_output <- chain_sim(
   stat = "size",
   infinite = 10E6,
   serial = serial_interval,
-  t0 = days_from_t0#,
- # tf = 14
+  t0 = days_from_t0,
+  tf = projection_end_day
 )
 
 # Add new columns to the results

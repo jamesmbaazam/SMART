@@ -21,7 +21,8 @@ days_from_t0 <- unlist(map2(.x = dat$days_from_t0,
                               )
                        )
 
-
+#Date to end simulation
+projection_end_day <- max(days_from_t0) + 14 #14 day projection
 
 #Simulation controls
 number_of_sims <- 5
