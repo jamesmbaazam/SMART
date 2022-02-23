@@ -5,6 +5,7 @@ library(purrr)
 
 #Helper functions
 source('./scripts/helper_functions.R')
+source('./scripts/get_data.R')
 
 #Get the cleaned data
 dat <- readRDS('./data/sa_covid_upto_mar5_2020.rds')
