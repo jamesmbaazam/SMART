@@ -5,7 +5,6 @@ library(purrr)
 
 #Helper functions
 source('./scripts/helper_functions.R')
-source('./scripts/get_data.R')
 
 #Get the cleaned data
 dat <- readRDS('./data/sa_covid_upto_mar5_2020.rds')
@@ -20,8 +19,8 @@ days_from_t0 <- unlist(map2(.x = dat$days_from_t0,
                             .f = function(.x, .y)return(rep(.x, times = ifelse(.y == 0, 1, .y)))
                               )
                        )
-                      
-projection_end_day <- max(days_from_t0) + 14 #14 day projection
+
+
 
 #Simulation controls
 number_of_sims <- 5
