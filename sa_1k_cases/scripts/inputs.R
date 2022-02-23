@@ -5,10 +5,13 @@ library(purrr)
 
 #Helper functions
 source('./scripts/helper_functions.R')
-source('./scripts/get_data.R')
 
 #Get the cleaned data
-dat <- readRDS('./data/sa_covid_upto_mar13_2020.rds')
+dat <- if (file.exists("./data/sa_covid_upto_mar13_2020.rds")) {
+  readRDS("./data/sa_covid_upto_mar13_2020.rds")
+} else {
+  source("./scripts/get_data.R")
+}
 
 #bpmodels inputs
 dat <- dat %>% 
