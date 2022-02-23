@@ -8,7 +8,7 @@ source('./scripts/helper_functions.R')
 source('./scripts/get_data.R')
 
 #Get the cleaned data
-dat <- readRDS('./data/sa_covid_upto_mar5_2020.rds')
+dat <- readRDS('./data/sa_covid_upto_mar13_2020.rds')
 
 #bpmodels inputs
 dat <- dat %>% 
@@ -21,27 +21,14 @@ days_from_t0 <- unlist(map2(.x = dat$days_from_t0,
                               )
                        )
 
-<<<<<<< HEAD
-serial_interval <- function(x = 1:10) {
-  si <- rlnorm(x, meanlog = si_mean, sdlog = si_sd)
-  return(si)
-  }
-=======
->>>>>>> origin/James_modifications
+
+#Date to end simulation
+projection_end_day <- max(days_from_t0) + 14 #14 day projection
 
 
 #Simulation controls
 number_of_sims <- 5
 
-<<<<<<< HEAD
-end_times <- seed_times + 14 
-
-library(readr)
-covid19za_timeline_confirmed <- read_csv("scripts/covid19za_timeline_confirmed.csv")
-View(covid19za_timeline_confirmed)
-
-
-=======
 #Serial interval distribution (must be input as a function) ----
 si_sd <- cal_desired_lognorm_sd(mu = 4.7, sigma = 2.9) #the desired standard deviation
 si_mean <- cal_desired_lognorm_mu(mu = 4.7, sigma = 2.9) #the desired mean
@@ -51,4 +38,3 @@ serial_interval <- function(sample_size = 1) {
   si <- rlnorm(sample_size, meanlog = si_mean, sdlog = si_sd)
   return(si)
   }
->>>>>>> origin/James_modifications
