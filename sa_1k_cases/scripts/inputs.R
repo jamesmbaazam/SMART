@@ -8,7 +8,7 @@ source('./scripts/helper_functions.R')
 source('./scripts/get_data.R')
 
 #Get the cleaned data
-dat <- readRDS('./data/sa_covid_upto_mar5_2020.rds')
+dat <- readRDS('./data/sa_covid_upto_mar13_2020.rds')
 
 #bpmodels inputs
 dat <- dat %>% 
@@ -21,8 +21,10 @@ days_from_t0 <- unlist(map2(.x = dat$days_from_t0,
                               )
                        )
 
+
 #Date to end simulation
 projection_end_day <- max(days_from_t0) + 14 #14 day projection
+
 
 #Simulation controls
 number_of_sims <- 5

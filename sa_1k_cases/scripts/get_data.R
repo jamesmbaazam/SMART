@@ -21,8 +21,8 @@ sa_data_subset <- sa_covid_data %>%
 
 #save the cleaned data to file '
 if(dir.exists('./data')){
-  saveRDS(sa_data_subset, file = './data/sa_covid_upto_mar5_2020.rds')
+  saveRDS(sa_data_subset, file = './data/sa_covid_upto_mar13_2020.rds')
 }else{
   dir.create('./data')
-  saveRDS(sa_data_subset, file = './data/sa_covid_upto_mar5_2020.rds')
+  saveRDS(sa_data_subset, file = './data/sa_covid_upto_mar13_2020.rds')
 }
