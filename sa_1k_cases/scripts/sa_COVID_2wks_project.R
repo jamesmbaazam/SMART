@@ -8,33 +8,44 @@ source('./scripts/inputs.R')
 
 set.seed(1234)
 ## Chain log-likelihood simulation
-ll_sim <- chain_sim(
-  n = length(t0s),
-  offspring = "nbinom",
-  mu = 2.0,
-  size = 0.38,
-  stat = "size",
-  infinite = 1E5,
-  serial = serial_interval,
-  t0 = t0s,
-  tf = 14,
-  tree = TRUE
+simulation_output <- map_dfr(1:number_of_sims,
+  function(id) {
+    out <- chain_sim(
+    n = length(days_from_t0),
+    offspring = "nbinom",
+    mu = 2.0,
+    size = 0.38,
+    stat = "size",
+    infinite = 1E7,
+    serial = serial_interval,
+    t0 = days_from_t0,
+    tf = projection_end_day,
+    tree = TRUE
+    ) %>% 
+      mutate(sim_id = id)
+    return(out)
+    }
 )
 
-#output
-ll_sim_mod <- ll_sim %>% 
-  mutate(day = floor(time)) %>% 
-  group_by(day) %>% 
-  summarise(cases = n()) %>% 
-  ungroup() %>% 
-  summarise(cum_cases = cumsum(cases)) %>% 
-  mutate(date = lubridate::as_date('2020-03-27') + 1:12)
+#Add new columns to the results
+simulation_output_mod <- simulation_output %>% 
+  mutate(day = floor(time)) 
 
-cases_plot <- ggplot(data = ll_sim_mod) + 
-  geom_line(aes(x = date, y = cum_cases), 
-           stat = 'identity', 
+final_output <- simulation_output_mod %>% 
+  group_by(sim_id, day) %>% 
+  summarise(cases = n(), .groups = 'drop_last') %>% 
+  summarise(cum_cases = cumsum(cases)) %>% 
+  slice_max(cum_cases) %>% 
+  ungroup()
+
+#make plots
+cases_plot <- ggplot(data = simulation_output_mod) + 
+  geom_boxplot(aes(cum_cases), 
            color = 'blue',
            size = 1
            )
 
 print(cases_plot)
+
+
+
