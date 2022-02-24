@@ -32,34 +32,9 @@ simulation_output <- bind_rows(simulation_output_list, .id = "column_label")
 #save the two weeks ahead time series projection to file 
 if(dir.exists('./model_output')){
   saveRDS(simulation_output, file = './model_output/two_wks_daily_cases_projection.rds')
-  mutate(day = ceiling(time))%>%
-  group_by(sim_id, day) %>%
-  summarise(cases = n(), .groups = "drop_last") %>%
-  ungroup()
-  
-# Calculate daily median cases and attach observed dates.  
-final_output <- simulation_output_mod %>% 
-  arrange(day) %>% 
-  group_by(day) %>% 
-  summarise(median_cases = median(cases)) %>% 
-  ungroup() %>% 
-  mutate(date = dmy("05-03-2020") + 0:projection_end_day)
-
-# Save time series.
-
-if(dir.exists('./data')){
-  saveRDS(final_output, file = './data/sa_covid_ts_14_days_from_march13.rds')
 }else{
   dir.create('./model_output')
   saveRDS(simulation_output, file = './model_output/two_wks_daily_cases_projection.rds')
 }
 
-# Make plots.
-cases_plot <- ggplot(data = final_output) +
-  geom_bar(aes(x = date, y = median_cases),
-    stat = "identity",
-    fill = "blue",
-    size = 1
-  )
 
-print(cases_plot)
