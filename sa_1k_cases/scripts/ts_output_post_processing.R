@@ -3,8 +3,18 @@ library('dplyr')
 library("ggplot2")
 library('lubridate')
 
-#Load the simulation output
-simulation_output <- readRDS()
+
+#Load the simulation output if it exists, else run the simulation script and load the results
+simulation_output <- if (file.exists("./model_output/two_wks_daily_cases_projection.rds")) {
+  readRDS("./model_output/two_wks_daily_cases_projection.rds")
+} else {
+  source("./scripts/generate_joint_ts.R", local = TRUE)
+  simulation_output
+}
+
+
+#Source relevant scripts
+source('./scripts/inputs.R')
 
 
 # Calculate cases per simulation per day. 
