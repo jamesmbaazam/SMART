@@ -10,7 +10,8 @@ source('./scripts/helper_functions.R')
 dat <- if (file.exists("./data/sa_covid_upto_mar13_2020.rds")) {
   readRDS("./data/sa_covid_upto_mar13_2020.rds")
 } else {
-  source("./scripts/get_data.R")
+  source("./scripts/get_data.R", local = TRUE)
+  readRDS("./data/sa_covid_upto_mar13_2020.rds")
 }
 
 #bpmodels inputs
