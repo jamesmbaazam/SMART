@@ -29,9 +29,9 @@ simulation_output_list <- lapply(
 # Unlist and bind simulation results.
 simulation_output <- bind_rows(simulation_output_list, .id = "column_label")
 
-
-# Calculate cases per simulation per day. 
-simulation_output_mod <- simulation_output %>%
+#save the two weeks ahead time series projection to file 
+if(dir.exists('./model_output')){
+  saveRDS(simulation_output, file = './model_output/two_wks_daily_cases_projection.rds')
   mutate(day = ceiling(time))%>%
   group_by(sim_id, day) %>%
   summarise(cases = n(), .groups = "drop_last") %>%
@@ -50,8 +50,8 @@ final_output <- simulation_output_mod %>%
 if(dir.exists('./data')){
   saveRDS(final_output, file = './data/sa_covid_ts_14_days_from_march13.rds')
 }else{
-  dir.create('./data')
-  saveRDS(final_output, file = './data/sa_covid_ts_14_days_from_march13.rds')
+  dir.create('./model_output')
+  saveRDS(simulation_output, file = './model_output/two_wks_daily_cases_projection.rds')
 }
 
 # Make plots.
