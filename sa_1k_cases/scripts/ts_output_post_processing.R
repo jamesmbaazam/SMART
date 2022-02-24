@@ -32,21 +32,36 @@ final_output <- simulation_output_mod %>%
   ungroup() %>% 
   mutate(date = dmy("05-03-2020") + 0:projection_end_day)
 
-# Save time series.
-
-if(dir.exists('./data')){
-  saveRDS(final_output, file = './data/sa_covid_ts_14_days_from_march13.rds')
-}else{
-  dir.create('./data')
-  saveRDS(final_output, file = './data/sa_covid_ts_14_days_from_march13.rds')
-}
 
 # Make plots.
 cases_plot <- ggplot(data = final_output) +
   geom_bar(aes(x = date, y = median_cases),
            stat = "identity",
-           fill = "blue",
+           fill = "tomato3",
            size = 1
-  )
+  ) +
+  scale_y_continuous(breaks = seq(0, max(final_output$median_cases), 10),
+                     labels = seq(0, max(final_output$median_cases), 10)
+                     ) +
+  labs(x = 'Date', y = 'Daily cases (median)') + 
+  theme_minimal(base_size = 14)
 
 print(cases_plot)
+
+#save the two weeks ahead median daily cases time series plot to file 
+if(dir.exists('./figs')){
+  ggsave(filename = './figs/cases_plot.jpg', 
+         plot = cases_plot,
+         width = 8.51,
+         height = 5.67,
+         units = 'in'
+         )
+}else{
+  dir.create('./figs')
+  ggsave(filename = './figs/cases_plot.jpg', 
+         plot = cases_plot,
+         width = 8.51,
+         height = 5.67,
+         units = 'in'
+  )
+}
