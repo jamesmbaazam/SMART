@@ -3,7 +3,7 @@ library("bpmodels")
 library("dplyr")
 
 # Source the inputs
-source("./scripts/inputs.R")
+source("./scripts/inputs.R", local = TRUE)
 
 set.seed(1234)
 
