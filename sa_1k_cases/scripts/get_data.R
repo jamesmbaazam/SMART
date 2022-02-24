@@ -17,7 +17,8 @@ sa_data_subset <- sa_covid_data %>%
   select(date) %>% 
   filter(date <= dmy('13-03-2020')) %>% 
   group_by(date) %>% 
-  summarise(cases = n())
+  summarise(cases = n()) %>% 
+  ungroup()
 
 #save the cleaned data to file '
 if(dir.exists('./data')){
