@@ -1,7 +1,7 @@
 #Packages
+library('dplyr')
 library("ggplot2")
 library('lubridate')
-library('tidyr')
 
 #Load the simulation output
 simulation_output <- readRDS()
